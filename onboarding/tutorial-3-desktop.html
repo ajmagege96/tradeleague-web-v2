@@ -328,11 +328,19 @@ a.tut-skip { display: block; text-align: center; text-decoration: none; }
   .onboard, .tut {
     width: 100%; max-width: 480px;
     margin: 0 0 0 clamp(48px, 9vw, 150px);
-    /* brand pinned at one fixed height on every onboarding page
-       (tutorial 2-5 placement) — content flows beneath it, so pages
-       with less content no longer drift the logo */
-    justify-content: flex-start;
-    padding-top: 22vh;
+    justify-content: center;
+    /* bias the centered cluster down by ~the brand block's height,
+       so the bottom sections sit exactly where the centered layout
+       (r2) put them — the brand is out of flow below */
+    padding-top: 110px;
+  }
+  /* Brand pinned at ONE fixed height on every onboarding page
+     (tutorial 2-5 placement). Absolute = out of flow, so only the
+     brand moved; nothing below it shifts per page. */
+  .onboard-brand, .tut-brand {
+    position: absolute;
+    top: 22vh; left: 0; right: 0;
+    margin: 0;
   }
   .onboard-brand, .tut-brand { margin-top: 0; }
   .onboard-bottom { margin-top: 44px; padding-top: 0; }

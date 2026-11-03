@@ -282,11 +282,19 @@ a.tut-skip { display: block; text-align: center; text-decoration: none; }
   .onboard, .tut {
     width: 100%; max-width: 480px;
     margin: 0 0 0 clamp(48px, 9vw, 150px);
-    /* brand pinned at one fixed height on every onboarding page
-       (tutorial 2-5 placement) — content flows beneath it, so pages
-       with less content no longer drift the logo */
-    justify-content: flex-start;
-    padding-top: 22vh;
+    justify-content: center;
+    /* bias the centered cluster down by ~the brand block's height,
+       so the bottom sections sit exactly where the centered layout
+       (r2) put them — the brand is out of flow below */
+    padding-top: 110px;
+  }
+  /* Brand pinned at ONE fixed height on every onboarding page
+     (tutorial 2-5 placement). Absolute = out of flow, so only the
+     brand moved; nothing below it shifts per page. */
+  .onboard-brand, .tut-brand {
+    position: absolute;
+    top: 22vh; left: 0; right: 0;
+    margin: 0;
   }
   .onboard-brand, .tut-brand { margin-top: 0; }
   .onboard-bottom { margin-top: 44px; padding-top: 0; }
@@ -322,14 +330,14 @@ a.tut-skip { display: block; text-align: center; text-decoration: none; }
             </div>
             <p class="hero-sub">Where skill beats speculation.</p>
 
-            <a class="cta primary" href="./tutorial-1-desktop.html">
+            <button type="button" class="cta primary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0;">
                 <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/>
                 <path d="M4 6v12a2 2 0 0 0 2 2h16v-4"/>
                 <path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"/>
               </svg>
               Connect Wallet
-            </a>
+            </button>
             <button type="button" class="cta ghost">More options to continue</button>
 
             <p class="legal">By continuing, you agree to our <a href="#terms">Terms</a> and <a href="#privacy">Privacy Policy</a>.</p>
