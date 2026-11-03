@@ -6673,6 +6673,49 @@ button.dsk2-more-btn {
 .card-comments { position: relative; z-index: 2; }
 .card-comments[hidden] { display: none; }
 
+
+/* ── Trader search (founder spec 2026-11-02): typeahead dropdown of
+   profiles; no Follow button in rows; works signed out ── */
+.tls { position: relative; margin-bottom: 18px; z-index: 70; }
+.tls-box {
+  display: flex; align-items: center; gap: 9px;
+  height: 40px; padding: 0 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  transition: border-color 150ms ease;
+}
+.tls-box:focus-within { border-color: var(--text-secondary); }
+.tls-box svg { width: 15px; height: 15px; color: var(--text-tertiary); flex-shrink: 0; }
+.tls-box input {
+  flex: 1; min-width: 0;
+  background: none; border: none; outline: none;
+  color: var(--text-primary);
+  font-family: inherit; font-size: 13.5px; font-weight: 500;
+}
+.tls-box input::placeholder { color: var(--text-tertiary); }
+.tls-box input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.tls-dd {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+  padding: 6px;
+  overflow: hidden;
+}
+.tls-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 9px;
+  text-decoration: none; color: inherit; cursor: pointer;
+}
+.tls-row:hover { background: var(--bg-surface-hover); }
+.tls-row .t-info { min-width: 0; }
+.tls-xp { margin-left: auto; flex-shrink: 0; }
+.tls-empty {
+  padding: 14px 10px; text-align: center;
+  font-size: 12.5px; font-weight: 500; color: var(--text-tertiary);
+}
 </style>
     <style>
 /* ════════ PREDICTION DETAIL (desktop v2) — ported from alpha/prediction-detail.html ════════ */
@@ -6946,6 +6989,14 @@ button.cd-icon-btn:hover { color: var(--text-primary); }
 
       <!-- ══ right rail: discover modules ══ -->
       <aside class="dsk2-side">
+        <div class="tls" data-tl-search>
+          <div class="tls-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" placeholder="Search traders" aria-label="Search traders" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="tls-dd" hidden></div>
+        </div>
+        
         <div class="discover-content">
           <div class="section">
             <div class="section-title">
@@ -7087,5 +7138,64 @@ button.cd-icon-btn:hover { color: var(--text-primary); }
       }
     })();
     </script>
-  </body>
+  
+<script>
+/* Trader search — static prototype of the typeahead (sample roster). */
+(function () {
+  var T = [
+    { h: "cryptoking",  v: 1, acc: "71%", rec: ["17", "24"], xp: 4820, pal: "av-bronze-amber" },
+    { h: "moonmaven",   v: 1, acc: "63%", rec: ["12", "19"], xp: 4110, pal: "av-orange-red" },
+    { h: "alpha_lana",  v: 0, acc: "68%", rec: ["11", "16"], xp: 3675, pal: "av-blue-purple" },
+    { h: "solranger",   v: 0, acc: "66%", rec: ["2", "3"],   xp: 2940, pal: "av-orange-red" },
+    { h: "chartcat",    v: 0, acc: "\u2014", rec: ["0", "0"], xp: 1420, pal: "av-green-blue" },
+    { h: "memedao",     v: 0, acc: "\u2014", rec: ["0", "0"], xp: 1180, pal: "av-purple-orange" },
+    { h: "lurkerleo",   v: 0, acc: "\u2014", rec: ["0", "0"], xp: 960,  pal: "av-purple-green" },
+    { h: "fanjet",      v: 0, acc: "\u2014", rec: ["0", "0"], xp: 640,  pal: "av-amber-rose" },
+    { h: "degentina",   v: 0, acc: "55%", rec: ["5", "9"],   xp: 610,  pal: "av-green-purple" },
+    { h: "bearwhale",   v: 0, acc: "42%", rec: ["5", "12"],  xp: 580,  pal: "av-blue-purple" },
+    { h: "wagmi_wren",  v: 0, acc: "60%", rec: ["3", "5"],   xp: 530,  pal: "av-green-blue" },
+    { h: "fomofox",     v: 0, acc: "50%", rec: ["4", "8"],   xp: 470,  pal: "av-amber-rose" }
+  ];
+  var BADGE = '<span class="badge-verified" title="Verified"><svg viewBox="0 0 22 22" fill="currentColor"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg></span>';
+  var TARGET = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>';
+  var root = document.querySelector("[data-tl-search]");
+  if (!root) return;
+  var input = root.querySelector("input");
+  var dd = root.querySelector(".tls-dd");
+  var timer;
+  function fmt(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+  function href(h) { return "./profile.html"; }
+  function row(x) {
+    return '<a class="tls-row" href="' + href(x.h) + '">' +
+      '<div class="avatar md ' + x.pal + ' t-avatar">' + x.h.charAt(0).toUpperCase() + "</div>" +
+      '<div class="t-info"><div class="t-name-row"><span class="t-uname">' + x.h + "</span>" + (x.v ? BADGE : "") + "</div>" +
+      '<div class="t-stats"><span class="stat-inline accuracy">' + TARGET + '<span class="acc-pct">' + x.acc + "</span></span>" +
+      '<span class="stat-inline record"><span class="rec-num">' + x.rec[0] + '</span><span class="rec-denom">/' + x.rec[1] + "</span></span></div></div>" +
+      '<span class="creator-xp tls-xp">' + fmt(x.xp) + " XP</span></a>";
+  }
+  function hits(q) {
+    q = q.toLowerCase();
+    var pre = [], sub = [];
+    T.forEach(function (x) {
+      var i = x.h.toLowerCase().indexOf(q);
+      if (i === 0) pre.push(x); else if (i > 0) sub.push(x);
+    });
+    var by = function (a, b) { return b.xp - a.xp; };
+    pre.sort(by); sub.sort(by);
+    return pre.concat(sub).slice(0, 8);
+  }
+  function render() {
+    var q = input.value.trim();
+    if (q.length < 2) { dd.hidden = true; dd.innerHTML = ""; return; }
+    var r = hits(q);
+    dd.innerHTML = r.length ? r.map(row).join("") : '<div class="tls-empty">No traders found</div>';
+    dd.hidden = false;
+  }
+  input.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(render, 250); });
+  input.addEventListener("focus", function () { if (input.value.trim().length >= 2) render(); });
+  input.addEventListener("keydown", function (e) { if (e.key === "Escape") { dd.hidden = true; input.blur(); } });
+  document.addEventListener("click", function (e) { if (!root.contains(e.target)) dd.hidden = true; });
+})();
+</script>
+</body>
 </html>
