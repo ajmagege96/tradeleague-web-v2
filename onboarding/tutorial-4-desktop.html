@@ -321,7 +321,11 @@ a.tut-skip { display: block; text-align: center; text-decoration: none; }
   .onboard, .tut {
     width: 100%; max-width: 480px;
     margin: 0 0 0 clamp(48px, 9vw, 150px);
-    justify-content: center;
+    /* brand pinned at one fixed height on every onboarding page
+       (tutorial 2-5 placement) — content flows beneath it, so pages
+       with less content no longer drift the logo */
+    justify-content: flex-start;
+    padding-top: 22vh;
   }
   .onboard-brand, .tut-brand { margin-top: 0; }
   .onboard-bottom { margin-top: 44px; padding-top: 0; }
