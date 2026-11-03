@@ -324,26 +324,29 @@ a.tut-skip { display: block; text-align: center; text-decoration: none; }
     position: relative;
     justify-content: flex-start;
   }
-  /* FIXED GRID (founder 2026-11-03): every block has an absolute slot
-     at the same y on login and all five tutorials. Nothing re-centers,
-     nothing moves between pages; a page missing a block (login has no
-     dots/graphic, tutorial 1 has no dots) leaves that slot blank. */
-  .onboard-brand, .tut-brand { position: absolute; top: 22vh; left: 0; right: 0; margin: 0; }
-  .tut-dots  { position: absolute; top: calc(22vh + 128px); left: 0; right: 0; margin: 0; }
-  .tut-mid   { position: absolute; top: calc(22vh + 158px); left: 0; right: 0; height: 118px; margin: 0; flex: none; display: flex; align-items: center; justify-content: center; }
-  .tut-art   { position: absolute; top: calc(22vh + 158px); left: 0; right: 0; height: 118px; margin: 0; display: flex; align-items: center; justify-content: center; }
-  .tut-title { position: absolute; top: calc(22vh + 292px); left: 0; right: 0; margin: 0; }
-  .tut-body  { position: absolute; top: calc(22vh + 334px); left: 0; right: 0; margin: 0; }
-  .tut-cta   { position: absolute; top: calc(22vh + 418px); left: 0; right: 0; margin: 0; }
-  .tut-skip  { position: absolute; top: calc(22vh + 486px); left: 0; right: 0; margin: 0; }
-  /* login shares the same slots: headline where tut titles sit, CTAs
-     in the tut-cta/skip slots, legal below */
+  /* FIXED GRID v2 — slots scale with viewport height (vh), so the
+     layout breathes at any window size instead of cramming on short
+     screens. Same slot on every page; blanks where a block is absent. */
+  .onboard-brand, .tut-brand { position: absolute; top: 16vh; left: 0; right: 0; margin: 0; }
+  .tut-dots  { position: absolute; top: 33vh; left: 0; right: 0; margin: 0; }
+  .tut-mid   { position: absolute; top: 36vh; left: 0; right: 0; height: 14vh; margin: 0; flex: none; display: flex; align-items: center; justify-content: center; }
+  .tut-art   { position: absolute; top: 36vh; left: 0; right: 0; height: 14vh; margin: 0; display: flex; align-items: center; justify-content: center; }
+  .tut-title { position: absolute; top: 52vh; left: 0; right: 0; margin: 0; }
+  .tut-body  { position: absolute; top: 57.5vh; left: 0; right: 0; margin: 0; }
+  .tut-cta   { position: absolute; top: 68vh; left: 0; right: 0; margin: 0; }
+  .tut-skip  { position: absolute; top: 77vh; left: 0; right: 0; margin: 0; }
   .onboard-bottom { position: static; margin: 0; padding: 0; }
-  .hero-carousel { position: absolute; top: calc(22vh + 288px); left: 0; right: 0; margin: 0; }
-  .hero-sub      { position: absolute; top: calc(22vh + 344px); left: 0; right: 0; margin: 0; }
-  .cta.primary   { position: absolute; top: calc(22vh + 418px); left: 0; right: 0; margin: 0; }
-  .cta.ghost     { position: absolute; top: calc(22vh + 486px); left: 0; right: 0; margin: 0; }
-  .legal         { position: absolute; top: calc(22vh + 534px); left: 0; right: 0; margin: 0; }
+  .hero-carousel { position: absolute; top: 51vh; left: 0; right: 0; margin: 0; }
+  .hero-sub      { position: absolute; top: 57.5vh; left: 0; right: 0; margin: 0; }
+  .cta.primary   { position: absolute; top: 68vh; left: 0; right: 0; margin: 0; }
+  .cta.ghost     { position: absolute; top: 77vh; left: 0; right: 0; margin: 0; }
+  .legal         { position: absolute; top: 84vh; left: 0; right: 0; margin: 0; }
+}
+/* short windows: shrink the artwork so it stays inside its 14vh slot */
+@media (min-width: 900px) and (max-height: 780px) {
+  .tut-art > *, .tut-mid > * { transform: scale(0.8); transform-origin: center; }
+}
+@media (min-width: 900px) {
 }
 </style>
   </head>
