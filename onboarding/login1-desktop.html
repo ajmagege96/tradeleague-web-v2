@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=390, initial-scale=1.0, viewport-fit=cover" />
-    <title>TradeLeague — Welcome</title>
+    <title>TradeLeague — Welcome (No Seeker)</title>
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -270,34 +270,25 @@ picture.built-on { display: inline-block; line-height: 0; }
 }
 .legal a:hover { color: var(--text-primary); }
     
-/* ── Desktop fit (web v2) — same screen, no new shell ──────────────
-   The phone column becomes the full viewport; the hero background
-   spans it edge to edge; the content stack rides centered in a
-   480px column. Nothing else changes. */
+/* ── Desktop fit (web v2, r2) — landing-page placement: brand and
+   bottom cluster pulled together, centered vertically, column on the
+   LEFT like tradeleague.com; trophy rides the right. Same screens. ── */
+a.cta, a.tut-cta { display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+a.tut-skip { display: block; text-align: center; text-decoration: none; }
 @media (min-width: 900px) {
   body { padding: 0; }
-  .phone {
-    max-width: none;
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
-  }
-  img.hero-bg, img.tut-bg {
-    top: 0;
-    height: 100%;
-    object-position: 84% 50%; /* trophy rides the right while content sits left */
-  }
-  /* Landing-page structure (founder 2026-11-02): content column
-     anchored LEFT like tradeleague.com, trophy rides the right. */
+  .phone { max-width: none; border-radius: 0; border: none; box-shadow: none; }
+  img.hero-bg, img.tut-bg { top: 0; height: 100%; object-position: 84% 50%; }
   .onboard, .tut {
-    width: 100%;
-    max-width: 480px;
+    width: 100%; max-width: 480px;
     margin: 0 0 0 clamp(48px, 9vw, 150px);
+    justify-content: center;
   }
-  .onboard-bottom { padding-top: 12vh; }
+  .onboard-brand, .tut-brand { margin-top: 0; }
+  .onboard-bottom { margin-top: 44px; padding-top: 0; }
+  .tut-mid { flex: 0 0 auto; margin: 40px 0 28px; }
 }
-
-    </style>
+</style>
   </head>
   <body>
     <main class="phone">
@@ -327,16 +318,14 @@ picture.built-on { display: inline-block; line-height: 0; }
             </div>
             <p class="hero-sub">Where skill beats speculation.</p>
 
-            <button type="button" class="cta primary">
-              <span class="sol-glyph" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6.4 16.5L4 19h13.6L20 16.5H6.4z"/>
-                  <path d="M6.4 10.75L4 13.25h13.6L20 10.75H6.4z"/>
-                  <path d="M6.4 5L4 7.5h13.6L20 5H6.4z"/>
-                </svg>
-              </span>
-              Continue with Seeker
-            </button>
+            <a class="cta primary" href="./tutorial-1-desktop.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0;">
+                <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/>
+                <path d="M4 6v12a2 2 0 0 0 2 2h16v-4"/>
+                <path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"/>
+              </svg>
+              Connect Wallet
+            </a>
             <button type="button" class="cta ghost">More options to continue</button>
 
             <p class="legal">By continuing, you agree to our <a href="#terms">Terms</a> and <a href="#privacy">Privacy Policy</a>.</p>

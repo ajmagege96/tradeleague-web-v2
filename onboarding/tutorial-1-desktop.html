@@ -264,34 +264,25 @@
       }
       .tut-skip:hover { color: var(--text-primary); }
     
-/* ── Desktop fit (web v2) — same screen, no new shell ──────────────
-   The phone column becomes the full viewport; the hero background
-   spans it edge to edge; the content stack rides centered in a
-   480px column. Nothing else changes. */
+/* ── Desktop fit (web v2, r2) — landing-page placement: brand and
+   bottom cluster pulled together, centered vertically, column on the
+   LEFT like tradeleague.com; trophy rides the right. Same screens. ── */
+a.cta, a.tut-cta { display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+a.tut-skip { display: block; text-align: center; text-decoration: none; }
 @media (min-width: 900px) {
   body { padding: 0; }
-  .phone {
-    max-width: none;
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
-  }
-  img.hero-bg, img.tut-bg {
-    top: 0;
-    height: 100%;
-    object-position: 84% 50%; /* trophy rides the right while content sits left */
-  }
-  /* Landing-page structure (founder 2026-11-02): content column
-     anchored LEFT like tradeleague.com, trophy rides the right. */
+  .phone { max-width: none; border-radius: 0; border: none; box-shadow: none; }
+  img.hero-bg, img.tut-bg { top: 0; height: 100%; object-position: 84% 50%; }
   .onboard, .tut {
-    width: 100%;
-    max-width: 480px;
+    width: 100%; max-width: 480px;
     margin: 0 0 0 clamp(48px, 9vw, 150px);
+    justify-content: center;
   }
-  .onboard-bottom { padding-top: 12vh; }
+  .onboard-brand, .tut-brand { margin-top: 0; }
+  .onboard-bottom { margin-top: 44px; padding-top: 0; }
+  .tut-mid { flex: 0 0 auto; margin: 40px 0 28px; }
 }
-
-    </style>
+</style>
   </head>
   <body>
     <main class="phone">
@@ -318,8 +309,8 @@
           <!-- Bottom cluster -->
           <div class="tut-title">Welcome to TradeLeague</div>
           <div class="tut-body">Anyone can have an opinion on markets — create a prediction, trade your beliefs, and win rewards!</div>
-          <button type="button" class="tut-cta">Next</button>
-          <button type="button" class="tut-skip">Skip Tutorial</button>
+          <a class="tut-cta" href="./tutorial-2-desktop.html">Next</a>
+          <a class="tut-skip" href="../home.html">Skip Tutorial</a>
         </section>
       </div>
     </main>
